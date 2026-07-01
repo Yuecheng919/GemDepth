@@ -43,7 +43,6 @@ MODEL_CONFIGS = {
 
 DEFAULT_CHECKPOINT = ROOT_DIR / "checkpoint" / "gemdepth.pth"
 MAX_DEMO_FRAMES = 300
-DEFAULT_POINT_CLOUD_FRAMES = 12
 DEFAULT_POINT_CLOUD_POINTS = 150_000
 
 
@@ -175,12 +174,15 @@ def frame_to_world_points(depth, frame, intrinsic, extrinsic):
     else:
         frame = frame[:, :, :3]
 
-    valid = np.isfinite(depth) & (depth > 0)
+    inverse_depth = depth.astype(np.float32)
+    valid = np.isfinite(inverse_depth) & (inverse_depth > 1e-6)
     if not np.any(valid):
         return np.empty((0, 3), dtype=np.float32), np.empty((0, 3), dtype=np.uint8)
 
+    depth = np.zeros_like(inverse_depth, dtype=np.float32)
+    depth[valid] = 1.0 / inverse_depth[valid]
     v, u = np.indices((h, w), dtype=np.float32)
-    z = depth.astype(np.float32)
+    z = depth
     x = (u - intrinsic[0, 2]) * z / intrinsic[0, 0]
     y = (v - intrinsic[1, 2]) * z / intrinsic[1, 1]
     cam_points = np.stack((x, y, z, np.ones_like(z)), axis=-1)[valid]
@@ -214,35 +216,18 @@ def save_ply(points, colors, output_path):
         np.savetxt(file, vertices, fmt="%.6f %.6f %.6f %d %d %d", header=header, comments="")
 
 
-def build_point_cloud(frames, depths, extrinsics, intrinsics, max_frames, max_points):
+def build_point_cloud(frames, depths, extrinsics, intrinsics, max_points):
     total = min(len(frames), len(depths), len(extrinsics), len(intrinsics))
     if total == 0:
         raise gr.Error("No frames are available for point cloud generation.")
 
-    max_frames = max(1, min(int(max_frames), total))
     max_points = max(1_000, int(max_points))
-    frame_indices = np.linspace(0, total - 1, max_frames, dtype=int)
-    per_frame_points = max(1, max_points // len(frame_indices))
     rng = np.random.default_rng(0)
 
-    all_points = []
-    all_colors = []
-    for idx in frame_indices:
-        points, colors = frame_to_world_points(depths[idx], frames[idx], intrinsics[idx], extrinsics[idx])
-        if len(points) == 0:
-            continue
-        if len(points) > per_frame_points:
-            selected = rng.choice(len(points), size=per_frame_points, replace=False)
-            points = points[selected]
-            colors = colors[selected]
-        all_points.append(points)
-        all_colors.append(colors)
-
-    if not all_points:
+    points, colors = frame_to_world_points(depths[0], frames[0], intrinsics[0], extrinsics[0])
+    if len(points) == 0:
         raise gr.Error("Could not generate any valid 3D points from this video.")
 
-    points = np.concatenate(all_points, axis=0)
-    colors = np.concatenate(all_colors, axis=0)
     if len(points) > max_points:
         selected = rng.choice(len(points), size=max_points, replace=False)
         points = points[selected]
@@ -252,8 +237,8 @@ def build_point_cloud(frames, depths, extrinsics, intrinsics, max_frames, max_po
     return points, colors
 
 
-def save_point_cloud(frames, depths, extrinsics, intrinsics, output_path, max_frames, max_points):
-    points, colors = build_point_cloud(frames, depths, extrinsics, intrinsics, max_frames, max_points)
+def save_point_cloud(frames, depths, extrinsics, intrinsics, output_path, max_points):
+    points, colors = build_point_cloud(frames, depths, extrinsics, intrinsics, max_points)
     save_ply(points, colors, output_path)
 
 
@@ -277,7 +262,7 @@ def copy_input_video(video_file) -> str:
 
 
 @spaces.GPU(duration=180)
-def run_demo(video_file, max_frames, target_fps, input_size, point_cloud_frames, point_cloud_points, grayscale, fp32):
+def run_demo(video_file, max_frames, target_fps, input_size, point_cloud_points, grayscale, fp32):
     if video_file is None:
         raise gr.Error("Please upload a video first.")
 
@@ -315,7 +300,6 @@ def run_demo(video_file, max_frames, target_fps, input_size, point_cloud_frames,
             extrinsics,
             intrinsics,
             output_point_cloud,
-            max_frames=point_cloud_frames,
             max_points=point_cloud_points,
         )
         np.savez_compressed(output_depth, depth=depths.astype(np.float32), fps=np.array(fps))
@@ -369,13 +353,6 @@ with gr.Blocks(title="GemDepth Demo") as demo:
                 value=420,
                 label="Inference size",
             )
-            point_cloud_frames_input = gr.Slider(
-                minimum=1,
-                maximum=64,
-                step=1,
-                value=DEFAULT_POINT_CLOUD_FRAMES,
-                label="Point cloud sampled frames",
-            )
             point_cloud_points_input = gr.Slider(
                 minimum=10_000,
                 maximum=500_000,
@@ -400,7 +377,6 @@ with gr.Blocks(title="GemDepth Demo") as demo:
             max_frames_input,
             target_fps_input,
             input_size_input,
-            point_cloud_frames_input,
             point_cloud_points_input,
             grayscale_input,
             fp32_input,

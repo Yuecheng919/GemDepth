@@ -27,8 +27,10 @@ def frame_to_world_points(depth, frame, intrinsic, extrinsic):
         frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
     elif frame.shape[2] == 4:
         frame = frame[:, :, :3]
-
-    valid = np.isfinite(depth) & (depth > 0)
+    inverse_depth = depth.astype(np.float32)
+    valid = np.isfinite(inverse_depth) & (inverse_depth > 1e-6)
+    depth = np.zeros_like(inverse_depth, dtype=np.float32)
+    depth[valid] = 1.0 / inverse_depth[valid]
     v, u = np.indices((h, w), dtype=np.float32)
     z = depth.astype(np.float32)
     x = (u - intrinsic[0, 2]) * z / intrinsic[0, 0]
