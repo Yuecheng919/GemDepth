@@ -20,6 +20,7 @@
 </div>
 
 ## 📢 News
+- **[2026.06.30]** 🔧🔧🔧 Update point cloud reconstruction by converting predicted inverse depth into real depth before 3D back-projection. You can now run [`run_video_pointcloud`](https://github.com/Yuecheng919/GemDepth/evaluation/inference/run_video_pointcloud) or [`app.py`](https://github.com/Yuecheng919/GemDepth/demo/app) to generate improved point clouds.
 - **[2026.06.29]** 🔥🔥🔥 Add comparisons with the recent generative video depth method [DVD](https://github.com/EnVision-Research/DVD), showing that GemDepth achieves superior spatial accuracy and temporal consistency.
 - **[2026.05.18]** 🤗🤗🤗 Evaluation datasets released on Hugging Face.
 - **[2026.05.16]** 🤗🤗🤗 Hugging Face Gradio demos released.
