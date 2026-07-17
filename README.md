@@ -205,11 +205,11 @@ If you find our works useful in your research, please consider citing our papers
 
 ```bibtex
 
-@inproceedings{Liu2026GemDepthGF,
+@article{liu2026gemdepth,
   title={GemDepth: Geometry-Embedded Features for 3D-Consistent Video Depth},
-  author={Yuecheng Liu and Junda Cheng and Longliang Liu and Wenjing Liao and Hanrui Cheng and Yuzhou Wang and Xin Yang},
-  year={2026},
-  url={https://api.semanticscholar.org/CorpusID:288258595}
+  author={Liu, Yuecheng and Cheng, Junda and Liu, Longliang and Liao, Wenjing and Cheng, Hanrui and Wang, Yuzhou and Yang, Xin},
+  journal={arXiv preprint arXiv:2605.10525},
+  year={2026}
 }
 
 ```
