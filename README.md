@@ -214,6 +214,15 @@ If you find our works useful in your research, please consider citing our papers
 
 ```
 
+## 🔥Star History
+
+<a href="https://www.star-history.com/?repos=Yuecheng919%2FGemDepth&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=Yuecheng919/GemDepth&type=date&theme=dark&legend=top-left&sealed_token=jJioG6Ae3J2UeoQka-Ss-23yVL9xfmnuTOsmfuoa6xJaKt-4_D4J6YkoGLWasc9-OP2_tDYXaD9ZTuPcYbwcLyUtmK72yepWiuHi-nOBBZoDVL05hpjj6gkPb2WgMAJhQq0YnxdaVDC8s5xPcWUE-N4jfbhKJ6y-01pkKe8EYnmYyND17YENC0RxmVjR" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=Yuecheng919/GemDepth&type=date&legend=top-left&sealed_token=jJioG6Ae3J2UeoQka-Ss-23yVL9xfmnuTOsmfuoa6xJaKt-4_D4J6YkoGLWasc9-OP2_tDYXaD9ZTuPcYbwcLyUtmK72yepWiuHi-nOBBZoDVL05hpjj6gkPb2WgMAJhQq0YnxdaVDC8s5xPcWUE-N4jfbhKJ6y-01pkKe8EYnmYyND17YENC0RxmVjR" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=Yuecheng919/GemDepth&type=date&legend=top-left&sealed_token=jJioG6Ae3J2UeoQka-Ss-23yVL9xfmnuTOsmfuoa6xJaKt-4_D4J6YkoGLWasc9-OP2_tDYXaD9ZTuPcYbwcLyUtmK72yepWiuHi-nOBBZoDVL05hpjj6gkPb2WgMAJhQq0YnxdaVDC8s5xPcWUE-N4jfbhKJ6y-01pkKe8EYnmYyND17YENC0RxmVjR" />
+ </picture>
+</a>
 
 
 ## 👏Acknowledgements
