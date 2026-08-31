@@ -8,7 +8,7 @@
 <sup>1</sup>Hust, <sup>2</sup>Carizon, <sup>3</sup>Optics Valley Laboratory
   <h5>If you like our project, please give us a star ⭐ on GitHub for the latest updates!</h5>
   
- [![Project Page](https://img.shields.io/badge/GemDepth-Website-green?logo=googlechrome&logoColor=green)](https://r11031.github.io/website/) [![Model](https://img.shields.io/badge/🤗%20HuggingFace-Model%20-yellow)](https://huggingface.co/YuechengLiu/GemDepth) [![Paper](https://img.shields.io/badge/arXiv-Paper-b31b1b?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2605.10525) [![Powered by OrcaRouter](https://img.shields.io/badge/Powered_by-OrcaRouter-2563eb)](https://www.orcarouter.ai/ref/ref_42f1887c286e8f49d467)
+ [![Project Page](https://img.shields.io/badge/GemDepth-Website-green?logo=googlechrome&logoColor=green)](https://r11031.github.io/website/) [![Model](https://img.shields.io/badge/🤗%20HuggingFace-Model%20-yellow)](https://huggingface.co/YuechengLiu/GemDepth) [![Paper](https://img.shields.io/badge/arXiv-Paper-b31b1b?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2605.10525) 
 </div>
 
 ## 🤗 Demo Video
